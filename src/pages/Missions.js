@@ -82,9 +82,8 @@ const getData=async()=>{
                </Row>
            </Container>
             <Container>
-                {loading?(<Loading/>)
-                :(
                     <>
+                    
                     <Row>
                          <Col xl={12}>
                          <Table responsive   hover size="xl" className="tablemission justify-content-start">
@@ -141,9 +140,7 @@ const getData=async()=>{
                                     </tbody>
                         </Table>
                          </Col>
-                         
-                    </Row>
-                    <ReactPaginate
+                         <ReactPaginate
                           previousLabel={"previous"}
                           nextLabel={"next"}
                           breakLabel={"..."}
@@ -162,9 +159,11 @@ const getData=async()=>{
                           breakLinkClassName={"page-link"}
                           activeClassName={"active"}
                        />
+                    </Row>
+                   
                     </>
-                )
-                }
+                
+                
                
                 
             </Container>
