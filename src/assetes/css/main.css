@@ -1,0 +1,12 @@
+@import url('./nav.css');
+@import url('./dashboard.css');
+.content{
+    margin-left: -60px;
+    margin-top: 80px!important;
+
+}
+body{
+    font-family: 'Poppins', sans-serif!important;
+    color: rgba(14, 14, 44, 1)!important;
+    background-color: #F6F7FB!important;
+}

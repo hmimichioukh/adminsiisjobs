@@ -1,0 +1,40 @@
+.nav-left{
+   background-color: rgba(76, 111, 255, 1)!important ;
+   height: 700px;
+    text-align: start;
+    padding: 28px;
+}
+.nav-left  a{
+    margin-bottom: 18px;
+    /* background-color: rgba(76, 111, 255, 1)!important ;
+     height: 600px;*/
+    color: white; 
+}
+.icon-nav{
+    width: 18px;
+    height: 18px;
+    margin-right: 16px;
+}
+.Nav-logo{
+    width: 120px;
+    height: 50px;
+    margin-left: 18px;
+}
+.nav-left a:focus{
+    /* background-color: rgba(76, 111, 255, 1)!important ;
+     height: 600px;*/
+    color: white;
+    font-weight: 600; 
+}
+.nav-left a:hover{
+    /* background-color: rgba(76, 111, 255, 1)!important ;
+     height: 600px;*/
+    color: white;
+    font-weight: 600; 
+}
+.nav-left  .active{
+    /* background-color: rgba(76, 111, 255, 1)!important ;
+     height: 600px;*/
+    color: white;
+    font-weight: 600; 
+}
