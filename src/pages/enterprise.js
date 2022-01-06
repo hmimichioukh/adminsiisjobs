@@ -5,6 +5,8 @@ import { FiMapPin,FiMail,FiPhone,FiShield,FiLinkedin,FiGlobe,FiMoreVertical } fr
 import { LinkContainer } from 'react-router-bootstrap'
 import Hmimi from "../assetes/image/hmimi.jpg"
 import {IconContext} from "react-icons"
+import Loading from '../helpers/loading'
+import Empty from '../helpers/empty'
 import axios from 'axios'
 const api = axios.create({  
     baseURL:'http://localhost:4444/admin'
@@ -12,7 +14,10 @@ const api = axios.create({
 
 function Enterprise(){
     const [enterprise,setEnterprise] = useState([])
+    const [loading, setLoading]=useState(false)
+
     useEffect(() => {
+        setLoading(true)
         api.get('recruiter',{
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -20,9 +25,11 @@ function Enterprise(){
         })
         .then((res)=>{
             setEnterprise(res.data)
+            setLoading(false)
             console.log(res.data)
         }).catch((err) => {
             console.log(err)
+            setLoading(false)
         })
     }, [])
 return(
@@ -40,7 +47,8 @@ return(
             </Row>
         </Container>
         <Container>
-            <Row>
+            {loading?(<Loading/>)
+            :(<Row>
                 {enterprise.map(en=>(
                      <Col xl={12}>       
                      <div className="card mb-3 Cand-Card" >
@@ -111,7 +119,8 @@ return(
                          </div>
              </Col>
                 ))}
-            </Row>
+            </Row>)}
+            
         </Container>
 
     </section>

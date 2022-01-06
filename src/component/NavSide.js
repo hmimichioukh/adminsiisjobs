@@ -28,6 +28,9 @@ function NavSide() {
                  <LinkContainer  to="/parteniars">
                  <Nav.Link ><IconContext.Provider value={{className:"icon-nav"}}><FiDatabase/></IconContext.Provider>Parteniars</Nav.Link>
                  </LinkContainer>
+                 <LinkContainer  to="/hero">
+                 <Nav.Link ><IconContext.Provider value={{className:"icon-nav"}}><FiGlobe/></IconContext.Provider>Modifier le Hero</Nav.Link>
+                 </LinkContainer>
                  <LinkContainer  to="/content">
                  <Nav.Link ><IconContext.Provider value={{className:"icon-nav"}}><FiGlobe/></IconContext.Provider>Les Avis d'utilisateurs</Nav.Link>
                  </LinkContainer>

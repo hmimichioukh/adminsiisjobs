@@ -4,6 +4,8 @@ import axios from 'axios'
 import { LinkContainer } from 'react-router-bootstrap'
 import { FiMoreVertical,FiBriefcase,FiUsers,FiDatabase } from "react-icons/fi";
 import {IconContext} from "react-icons"
+import Loading from '../../helpers/loading'
+import Empty from '../../helpers/empty'
 
 const api = axios.create({  
     baseURL:'http://localhost:4444/admin'
@@ -11,10 +13,10 @@ const api = axios.create({
 
 function ConsultansTable() {
     const[consultans,setConsultans] = useState([])
-    const[users,setUsers]=useState([])
-    const[recruiter,setRecruiter] = useState([])
+    const [loading, setLoading]=useState(false)
 
     useEffect(() => {
+        setLoading(true)
         api.get('/consultans',{
             headers: {
                   Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -23,28 +25,7 @@ function ConsultansTable() {
         .then((res)=>{
            console.log(res.data);
             setConsultans(res.data)
-        }).catch((err) => {
-            console.log(err);
-        })
-        api.get('/users',{
-            headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            }
-                })
-        .then((res)=>{
-           // console.log(res);
-           setUsers(res.data)
-        }).catch((err) => {
-            console.log(err);
-        })
-        api.get('/recruiter',{
-            headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            }
-                })
-        .then((res)=>{
-            //console.log(res);
-           setRecruiter(res.data)
+            setLoading(false)
         }).catch((err) => {
             console.log(err);
         })
@@ -52,10 +33,15 @@ function ConsultansTable() {
      }, [])
     return(
         <>
-          <Container className="consultants">
-            <Row>
-                <h4>List des Nouveaux  Consultants</h4>
-               <Col xl={12}> 
+         
+    <Container className="consultants">
+   
+    {loading ?( <Row><Loading/></Row>)
+    :(
+        <>
+        <Row>
+        <h4>List des Nouveaux  Consultants</h4>
+            {consultans.length>0?( <Col xl={12}> 
                     <Table responsive   hover size="xl" className="tablemission">
                                 <thead>
                                     <tr>
@@ -84,7 +70,7 @@ function ConsultansTable() {
                                                 <button type="button" className="btn btn-action-table  " data-bs-toggle="dropdown" aria-expanded="false">
                                                     <IconContext.Provider value={{className:"icon-table"}}>
                                                     <FiMoreVertical/>
-
+        
                                                     </IconContext.Provider>
                                                 </button>
                                                 <ul class="dropdown-menu">
@@ -98,15 +84,25 @@ function ConsultansTable() {
                                             
                                             
                                             </td>
-
+        
                                     </tr>
                                     ))}
                                     
                                 </tbody>
                     </Table>
-              </Col>
-            </Row>
-        </Container>
+            </Col>):(<Empty/>)}
+
+           
+        </Row>
+        </>
+   
+    )
+    }
+   
+  
+</Container>
+
+
        {/* <Container>
             <Row>
                 <h4>List des users</h4>

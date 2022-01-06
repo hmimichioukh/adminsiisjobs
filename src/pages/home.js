@@ -11,6 +11,7 @@ import Enterprise from "./enterprise";
 import EditContent from "./editContent";
 import Messages from "./messages";
 import Parteniars from './parteniars'
+import Hero from "./hero";
 import About from "./About";
 function Home(){
     return(
@@ -29,6 +30,8 @@ function Home(){
                                    <Route  path="/enterprise" component={Enterprise} />  
                                    <Route  path="/content" component={EditContent} />  
                                    <Route  path="/messages" component={Messages} />  
+                                   <Route  path="/hero" component={Hero} />  
+
                                    <Route  path="/addmission" component={Addmission} />      
                                    <Route  path="/about" component={About} />        
                                    <Route  path="/parteniars" component={Parteniars} />        

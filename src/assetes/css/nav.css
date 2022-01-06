@@ -1,7 +1,7 @@
 .nav-left{
    background-color: rgba(76, 111, 255, 1)!important ;
-   height: 700px;
-    text-align: start;
+   height: auto;
+   text-align: start;
     padding: 28px;
 }
 .nav-left  a{

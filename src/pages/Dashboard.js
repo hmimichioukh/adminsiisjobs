@@ -4,12 +4,14 @@ import ConsultansTable from '../component/Dashboard/ConstultansTables'
 import {FiBriefcase,FiUsers,FiDatabase } from "react-icons/fi";
 import {LinkContainer} from "react-router-bootstrap"
 import {IconContext} from "react-icons"
+
 import axios from 'axios'
 const api = axios.create({  
     baseURL:'http://localhost:4444/admin'
 });
 function Dashboard() {
     const[users,setUsers]=useState([])
+    const [loading, setLoading]=useState(false)
     const[jobs,setJobs] = useState([])
     const[consultans,setConsultans] = useState([])
     const[recruiter,setRecruiter] = useState([])

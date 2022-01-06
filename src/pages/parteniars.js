@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Container, Row,Col,Button,Form , Modal} from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import Loading from '../helpers/loading'
 import PartCard from "../component/partenaires/partCard"
 import axios from 'axios'
 const api = axios.create({  
@@ -14,15 +14,24 @@ function Parteniars() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [parteniars, setParteniars]= useState([])
+    const [loading, setLoading]=useState(false)
+
     useEffect(() => {
+        setLoading(true)
         api.get('/partenaire',{
             headers: {
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
             },
           }).then((response) =>{
+            setLoading(false);
+
               //console.log(response.data)
               setParteniars(response.data)
-          })
+          }).catch((error) =>{
+              console.log(error)
+              setLoading(false)
+
+            })
     }, [])
 
  /* Add a partenaire */
@@ -125,11 +134,13 @@ const send = api.post('/partenaire',{name,partImage},{
                 </Row>
             </Container>
             <Container>
-                <Row>
+                {loading?(<Loading/>)
+                :( <Row>
                     {(parteniars||[]).map((parteniar) =>(
                         <PartCard idx={parteniar._id} detail={parteniar} />    
                     ))}
-                </Row>
+                </Row>)}
+               
             </Container>
        </section>
     )

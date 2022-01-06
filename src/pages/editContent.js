@@ -1,11 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { Container, Row,Col,Button , Modal,Form} from 'react-bootstrap'
-import ConsultansTable from '../component/Dashboard/ConstultansTables'
-import { FiMapPin,FiMail,FiPhone,FiShield,FiLinkedin,FiGlobe,FiMoreVertical } from "react-icons/fi";
-import { LinkContainer } from 'react-router-bootstrap'
-import Hmimi from "../assetes/image/hmimi.jpg"
 import TestCard from "../component/testmonials/testCard"
-import {IconContext} from "react-icons"
+import Loading from '../helpers/loading'
 import axios from 'axios'
 const api = axios.create({  
     baseURL:'http://localhost:4444/admin'
@@ -14,6 +10,7 @@ function EditContent() {
     const [testmonials,setTesmonials] = useState([])
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    const [loading, setLoading]=useState(false)
     const handleShow = () => setShow(true);
     const [name,setName] = useState("")
     const [domain,setDomain] = useState("")
@@ -22,15 +19,20 @@ function EditContent() {
     
     const [imagePreview, setImagePreview] = useState("");
     useEffect(() => {
+        setLoading(true);
         api.get('/testmonials',{
             headers: {
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
             },
           }).then((response) => {
+            setLoading(false)
               setTesmonials(response.data)
               //console.log(response.data)
           }).catch((error) => 
-          {console.log(error)})
+          {console.log(error)
+            setLoading(false)
+
+        })
     }, [])
     const ImagePic=(pics)=>{
         if(!pics){
@@ -144,11 +146,13 @@ function EditContent() {
                 </Row>
             </Container>
             <Container>
-            <Row>
+                {loading?(<Loading/>):(  
+                     <Row>
                  {(testmonials||[]).map((testmonial) =>(
                     <TestCard idx={testmonial._id} detail={testmonial} />
                  ))}
-                </Row>
+                </Row>)}
+         
             </Container>
         </section>
     )

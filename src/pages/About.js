@@ -1,13 +1,23 @@
 import React,{useState,useEffect} from 'react'
 import { Container, Row,Col,Button ,Form, } from 'react-bootstrap'
+import Loading from '../helpers/loading'
 import axios from 'axios'
 const api = axios.create({  
     baseURL:'http://localhost:4444/admin'
 });
 function About() {
+    const[titleTop,setTitleTop]=useState("")
+    const[siisDes,setSiisDes]=useState("")
+    const[titleSecondary,setTitleSecondary]=useState("")
+    const[siisMission,setSiisMission]=useState("")
+    const[titleleft,setTitleleft]=useState("")
+    const[siisEnt,setSiisEnt]=useState("")
+    const[titleRight,seTtitleRight]=useState("")
+    const[siisCan,setSiisCan]=useState("")
+    const [loading, setLoading]=useState(false)
+
     const [about, setAbout] = useState({
         _id:"",
-        imageTop:"",
         titleTop:"",
         siisDes:"",
         titleSecondary:"",
@@ -27,7 +37,7 @@ function About() {
     const id = about._id
    
     useEffect(() => {
-        
+        setLoading(true)
         api.get(`/about`,{
             headers: {
                   Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -37,14 +47,24 @@ function About() {
                 console.log(response.data)
                 setAbout(response.data[0])
                 setImageTop(response.data[0].imageTop)
+                setTitleTop(response.data[0].titleTop)
+                setSiisDes(response.data[0].siisDes)
+                setTitleSecondary(response.data[0].titleSecondary)
+                setSiisMission(response.data[0].siisMission)
+                setTitleleft(response.data[0].titleleft)
+                setSiisEnt(response.data[0].siisEnt)
+                seTtitleRight(response.data[0].titleRight)
+                setSiisCan(response.data[0].siisCan)
+                setLoading(false)
+
+            }).catch((error)=>{
+                console.log(error)
+                setLoading(false)
+
             })
 
     }, [])
-    const handleInput = (e) => {
-        const {name,value} = e.target;
-        setAbout({...about, [name]:value });
-        
-    };
+   
     const getImageJob= (e) =>{
         setImageTop(e.target.files[0])
         setImagePreview(URL.createObjectURL(e.target.files[0]))
@@ -71,23 +91,20 @@ function About() {
              })
          }
     }
+    const handleInput = (e) => {
+        const {name,value} = e.target;
+        setAbout({...about, [name]:value });
+        
+    };
     const UpdateAbout=(e)=>{
         e.preventDefault();
         if(!about.titleTop || !about.siisDes || !about.titleSecondary || !about.siisMission || !about.titleleft || !about.siisEnt || !about.titleRight || !about.siisCan){
             setMessage('Please fill the form before updating')
         }else{
-            const formData= new FormData();
-            formData.append('imageTop',imageTop);
-            formData.append('name',about.name);
-            formData.append('sexe',about.siisDes);
-            formData.append('email',about.titleSecondary);
-            formData.append('phone',about.siisMission);
-            formData.append('address',about.titleleft);
-            formData.append('age',about.siisEnt);
-            formData.append('age',about.titleRight);
-            formData.append('age',about.siisCan);
+           
+           
 
-            const data =  api.put(`/about/${id}`,formData, {
+            const data =  api.put(`/about/${id}`,{titleTop,siisDes,siisEnt,siisCan,titleRight,titleleft,titleSecondary,imageTop,siisMission}, {
                         headers: {
                               Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                             },
@@ -118,7 +135,7 @@ function About() {
                     </Col>
                 </Row>
             </Container>
-            <Container className="updatedata">
+            {loading?(<Loading/>):(  <Container className="updatedata">
             <Form onSubmit={UpdateAbout} enctype="multipart/form-data"  > 
             <Row>
             <h5>Image de about us</h5>
@@ -142,22 +159,22 @@ function About() {
                     <Row>
                         <h5>Presentation De SIIS</h5>
                         <Col xl={12}>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Group className="mb-3" >
                                 <Form.Label>Titre Haut</Form.Label>
                                 <Form.Control type="text"
                                 placeholder="Enter email"
-                                onChange={handleInput}
+                                onChange={(e)=>setTitleTop(e.target.value)}
                                 name="titleTop"
-                                value={about.titleTop}
+                                value={titleTop}
                                 />
                                 
                             </Form.Group>  
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Group className="mb-3" >
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control as="textarea" rows={8} 
-                                onChange={handleInput}
+                                onChange={(e)=>setSiisDes(e.target.value)}
                                 name="siisDes"
-                                value={about.siisDes}
+                                value={siisDes}
                                 placeholder="Enter description de l'enterprise" />
                             </Form.Group>                    
                         </Col>
@@ -166,21 +183,21 @@ function About() {
                <h5>Notre Mission</h5>
 
                 <Col xl={12}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Titre Secondary</Form.Label>
                         <Form.Control type="text" placeholder="Enter email"
-                         onChange={handleInput}
+                         onChange={(e)=>setTitleSecondary(e.target.value)}
                          name="titleSecondary"
-                         value={about.titleSecondary}
+                         value={titleSecondary}
                         />
                     </Form.Group>  
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Description Secondary</Form.Label> 
                         <Form.Control as="textarea" rows={8} 
                         placeholder="Enter description de l'enterprise"
-                        onChange={handleInput}
+                        onChange={(e)=>setSiisMission(e.target.value)}
                         name="siisMission"
-                        value={about.siisMission} />
+                        value={siisMission} />
                     </Form.Group>                    
                 </Col>
                </Row>
@@ -188,45 +205,46 @@ function About() {
                <h5></h5>
 
                 <Col xl={6}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Titre Section Enterprises</Form.Label>
                         <Form.Control type="text" placeholder="Enter email"
-                        onChange={handleInput}
+                        onChange={(e)=>setTitleleft(e.target.value)}
                          name="titleleft"
-                         value={about.titleleft} />
+                         value={titleleft} />
                         
                     </Form.Group>  
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Section Enterprises</Form.Label>
                         <Form.Control as="textarea" rows={8} 
                         placeholder="Enter description de l'enterprise"
-                        onChange={handleInput}
+                        onChange={(e)=>setSiisEnt(e.target.value)}
                         name="siisEnt"
-                        value={about.siisEnt} />
+                        value={siisEnt} />
                     </Form.Group>                    
                 </Col>
                 <Col xl={6}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Titre Section Candidates</Form.Label>
                         <Form.Control type="text" placeholder="Enter email"
-                         onChange={handleInput} 
+                         onChange={(e)=>seTtitleRight(e.target.value)} 
                         name="titleRight"
-                         value={about.titleRight}/>
+                         value={titleRight}/>
                         
                     </Form.Group>  
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group className="mb-3" >
                         <Form.Label>Section Candidates</Form.Label>
                         <Form.Control as="textarea" rows={8} 
                         placeholder="Enter description de l'enterprise"
-                        onChange={handleInput}
+                        onChange={(e)=>setSiisCan(e.target.value)}
                         name="siisCan"
-                        value={about.siisCan} />
+                        value={siisCan} />
                     </Form.Group>                    
                 </Col>
                 <Button variant="primary" type="submit" > Modifier la page about</Button>
                </Row> 
                </Form>
-            </Container>
+            </Container>)}
+          
         </section>
     )
 }
