@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { FiFile,FiMail,FiPhone,FiGlobe,FiMoreVertical } from "react-icons/fi";
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function SingleMessage(props) {
     const {detail}=props

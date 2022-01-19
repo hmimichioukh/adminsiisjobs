@@ -8,7 +8,7 @@ import Loading from '../../helpers/loading'
 import Empty from '../../helpers/empty'
 
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 
 function ConsultansTable() {
@@ -40,25 +40,25 @@ function ConsultansTable() {
     :(
         <>
         <Row>
-        <h4>List des Nouveaux  Consultants</h4>
+        <h4>List des Nouveaux  Chercheurs d'emplois</h4>
             {consultans.length>0?( <Col xl={12}> 
                     <Table responsive   hover size="xl" className="tablemission">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Nom de Consultant</th>
+                                        <th>Image</th>
+                                        <th>Nom de Utilisateur</th>
                                         <th>email</th>
                                         <th>phone</th>
                                         <th>Domaine</th>
                                         <th>Experince</th>
-                                        <th>Address</th>
+                                        <th>Adresse</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {consultans.map(consultant=>(
                                         <tr idx={consultant._id}>
-                                            <td>{consultant.userId} </td>
+                                            <td><img src={consultant.imageUser} style={{"width":"80px"}} />    </td>
                                             <td>{consultant.name} </td>
                                             <td>{consultant.email} </td>
                                             <td>{consultant.phone} </td>

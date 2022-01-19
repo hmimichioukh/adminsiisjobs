@@ -6,7 +6,7 @@ import Loading from '../helpers/loading'
 import Empty from '../helpers/empty'
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function Consultans() {
 const [consultans, setConsultans] = useState([])
@@ -37,7 +37,7 @@ useEffect(  () => {
                 <h4>Les Consultans</h4>
                 </Col>
                 <Col xl={2}>
-                <LinkContainer to="/missions/add">
+                <LinkContainer to="/addconsultant">
                     <Button>Ajouter un Consultan </Button>
                     </LinkContainer>
                 </Col>

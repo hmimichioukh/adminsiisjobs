@@ -1,18 +1,22 @@
 import React,{useState,useEffect} from 'react'
 import { Container, Row,Col,Button ,Form} from 'react-bootstrap'
 import Loading from '../helpers/loading'
+import ErrorMessage from '../helpers/errormessage'
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 
  function Hero(){
-    const [loading, setLoading]=useState(false)
-     const[id,setId] = useState("")
+const [error, setError] = useState(false)
+const [loading, setLoading] = useState(false)
+const [message, setMessage] = useState(null);
+const [id,setId] = useState("")
 const [title, setTitle] = useState("")
 const [buttonText, setButtonText] = useState("")
 const [heroImage,setHeroImage] = useState("")
 const [imagePreview, setImagePreview] = useState("");
+
 useEffect(() => {
     setLoading(true)
     api.get('/hero',{
@@ -22,7 +26,7 @@ useEffect(() => {
       }).then((response) =>{
         setLoading(false)
 
-        console.log(response.data[0])
+        //console.log(response.data[0])
         setHeroImage(response.data[0].heroImage)
         setTitle(response.data[0].title)
         setButtonText(response.data[0].buttonText)
@@ -40,6 +44,7 @@ const ImagePic=(pics)=>{
     }
      if(pics.type==='image/jpeg'||pics.type==='image/png'|| pics.type==='image/jpg'|| pics.type==='image/png')
      {
+        setLoading(true)
          const data = new FormData();
          data.append('file',pics)
          data.append('upload_preset','siisjob')
@@ -49,11 +54,14 @@ const ImagePic=(pics)=>{
              body: data,
          }
          ).then((res)=>res.json()).then((data)=>{
-             console.log(data)
+             //console.log(data)
              setHeroImage(data.url.toString());
+             setLoading(false)
 
          }).catch((err)=>{
              console.log(err)
+             setLoading(false)
+
          })
      }
 }
@@ -64,20 +72,32 @@ const profileImage = (e) =>{
 }
 const updateHero=(e)=>{
     e.preventDefault();
+    setLoading(true)
+
     const send = api.put(`/hero/${id}`,{title,buttonText,heroImage},{
         headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
     }).then((res)=>{
-        console.log(res)
-        window.location.reload()
+        //console.log(res)
+        //window.location.reload()
+        setLoading(false)
+        setMessage("Mise a jour est fait")
+
     }).catch((err)=>{
-        console.log(err)
+        //console.log(err)
+        setLoading(false)
+        setError("Il y un problem")
+
     })
-    
+    setMessage("")
+
     }
 return (
         <section >
+             {error && <ErrorMessage variant="danger">{error} </ErrorMessage>}
+            {loading && <Loading/>}
+            {message && <ErrorMessage variant="success">{message} </ErrorMessage>}
             <Container style={{"marginBottom":"48px"}}>
                 <Row>
                     <Col xl={10}>

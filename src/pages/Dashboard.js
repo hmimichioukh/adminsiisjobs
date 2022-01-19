@@ -7,7 +7,7 @@ import {IconContext} from "react-icons"
 
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function Dashboard() {
     const[users,setUsers]=useState([])
@@ -68,39 +68,39 @@ const recruiterLength = recruiter.length
        <section className="dashboard">
            <Container>
                <Row>
-                   <Col xl={3}>
-                   <Card style={{ width: '18rem' }} className="dashboard-card">
+                   <Col xl={4}>
+                   <Card  className="dashboard-card">
                         <Card.Body>
                         <IconContext.Provider value={{className:"icon-table icon-dash"}}><FiBriefcase/></IconContext.Provider>
-                            <Card.Title>Number Des Jobs</Card.Title>
+                            <Card.Title>Total des Offres d'emplois</Card.Title>
                             <Card.Text>
                             {total}
                             </Card.Text>
                             <LinkContainer to="/missions">
-                                 <Button variant="primary">Voir Les missions</Button>
+                                 <Button variant="primary">Voir Les Offres</Button>
                             </LinkContainer>
                         </Card.Body>
                         </Card>
                    </Col>
-                   <Col xl={3}>
-                   <Card style={{ width: '18rem' }} className="dashboard-card">
+                   <Col xl={4}>
+                   <Card  className="dashboard-card">
                         <Card.Body>
                         <IconContext.Provider value={{className:"icon-table icon-dash"}}><FiBriefcase/></IconContext.Provider>
-                            <Card.Title>Number Consultans</Card.Title>
+                            <Card.Title>Total Chercheurs d'emplois</Card.Title>
                             <Card.Text>
                             {consultansLength}
                             </Card.Text>
                             <LinkContainer to="/consultans">
-                                 <Button variant="primary">Voir Les Consultans</Button>
+                                 <Button variant="primary">Voir Les Chercheurs</Button>
                             </LinkContainer>                        
                             </Card.Body>
                         </Card>
                    </Col>
-                   <Col xl={3}>
-                       <Card style={{ width: '18rem' }} className="dashboard-card">
+                   <Col xl={4}>
+                       <Card  className="dashboard-card">
                         <Card.Body>
                         <IconContext.Provider value={{className:"icon-table icon-dash"}}><FiDatabase/></IconContext.Provider>
-                            <Card.Title>number Enterprise</Card.Title>
+                            <Card.Title>Total  Enterprise</Card.Title>
                             <Card.Text>
                             {recruiterLength}
                             </Card.Text>
@@ -109,20 +109,6 @@ const recruiterLength = recruiter.length
                             </LinkContainer>                        
                             
                              </Card.Body>
-                        </Card>
-                   </Col>
-                   <Col xl={3}>
-                       <Card style={{ width: '18rem' }} className="dashboard-card">
-                        <Card.Body>
-                        <IconContext.Provider value={{className:"icon-table icon-dash"}}><FiUsers/></IconContext.Provider>
-                            <Card.Title>Number of All users</Card.Title>
-                            <Card.Text>
-                            {usersLength}
-                            </Card.Text>
-                            <LinkContainer to="/missions">
-                                 <Button variant="primary">Voir Les missions</Button>
-                            </LinkContainer>                        
-                        </Card.Body>
                         </Card>
                    </Col>
                </Row>

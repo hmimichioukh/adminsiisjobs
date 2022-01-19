@@ -4,7 +4,7 @@ import Loading from '../helpers/loading'
 import PartCard from "../component/partenaires/partCard"
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function Parteniars() {
     const [show, setShow] = useState(false);
@@ -25,7 +25,7 @@ function Parteniars() {
           }).then((response) =>{
             setLoading(false);
 
-              //console.log(response.data)
+              console.log(response.data)
               setParteniars(response.data)
           }).catch((error) =>{
               console.log(error)

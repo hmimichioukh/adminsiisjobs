@@ -9,13 +9,12 @@ import Loading from '../middilware/loading'
 
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 
 function Login(){
     const [loggedin, setLoggedin] = useState(isAuth());
     const [error, setError] = useState(false)
-    //const [userType,setUserType]=useState('')
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState(null);
     const [loginDetails, setLoginDetails] = useState({

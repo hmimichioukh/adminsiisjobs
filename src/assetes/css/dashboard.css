@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+body{
+    font-family: 'Poppins', sans-serif!important;
 
+}
 .icon-dash{
     margin-bottom: 16px;
 }
@@ -180,4 +184,60 @@ thead{
 .updatedata h5 {
     font-weight: bold;
     margin-bottom:28px;
+}
+.icon-card {
+    margin-right: 8px;
+}
+.card-job {
+    margin-bottom: 48px;
+    transition: 800ms;
+}
+.job-info-ess {
+    margin-top: 18px;
+}
+.card-job-img {
+    width: 80px;
+    height: 80px;
+    margin: 16px;
+    padding: 8px;
+    background-color: rgba(76, 111, 255, 0.5)!important;
+    border-radius: 2px;
+}
+.job-info-ess p {
+    font-size: 12px;
+    margin-bottom: 8px!important;
+}
+.badge-skill {
+    font-weight: 400;
+    font-size: 12px;
+    padding: 8px;
+}
+.card-job .card-text {
+    font-size: 16px;
+    color: rgba(14, 14, 44, 0.8)!important;
+}
+.job-info-ess h6 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px!important;
+}
+.skills {
+    list-style: none;
+    margin-left: -30px;
+}
+.skills .badge-skill {
+    margin-right: 8px;
+}
+.badge-skill {
+    font-weight: 400;
+    font-size: 12px;
+    padding: 8px;
+}
+.Cand-Card {
+    transition: 600;
+    margin-bottom: 28px;
+}
+.icon-single {
+    color: rgba(76, 111, 255, 1);
+    margin-right: 16px;
 }

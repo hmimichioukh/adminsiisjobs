@@ -9,7 +9,7 @@ import Loading from '../helpers/loading'
 import Empty from '../helpers/empty'
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 
 function Enterprise(){
@@ -26,7 +26,7 @@ function Enterprise(){
         .then((res)=>{
             setEnterprise(res.data)
             setLoading(false)
-            console.log(res.data)
+            //console.log(res.data)
         }).catch((err) => {
             console.log(err)
             setLoading(false)
@@ -40,7 +40,7 @@ return(
                 <h4>Les Enterprises</h4>
                 </Col>
                 <Col xl={2}>
-                <LinkContainer to="/missions/add">
+                <LinkContainer to="/addenterprise">
                     <Button>Ajouter  Une Enterprise </Button>
                     </LinkContainer>
                 </Col>
@@ -106,11 +106,9 @@ return(
                                          </IconContext.Provider>
                                      </button>
                                          <ul className="dropdown-menu">
-                                             <LinkContainer to="/">
-                                         <li className="dropdown-item">Voir</li>
+                                             <LinkContainer to={`/monenterprise/${en.userId} `}>
+                                         <li className="dropdown-item">Voir les Offres</li>
                                          </LinkContainer>
-                                         <li><a className="dropdown-item" href="#">Modifer</a></li>
-                                         <li><a className="dropdown-item" href="#">Telecharger CV</a></li>
                                          <li><a className="dropdown-item"  >Suprimmer</a></li>
                                          </ul>
                                      </div>                    

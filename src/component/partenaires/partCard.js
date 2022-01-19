@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { FiMail,FiGlobe,FiMoreVertical } from "react-icons/fi";
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function PartCard(props) {
     const [show, setShow] = useState(false);
@@ -40,7 +40,7 @@ function PartCard(props) {
                  </Button>
                 </Modal.Footer>
             </Modal>
-            <Col xl={3}>       
+            <Col xl={4}>       
                 <div className="card" style={{"width": "18rem","marginBottom":"30px"}}>
                     <img src={detail.partImage} class="card-img-top" alt="partenaire logo" style={{"width": "200px","height":"120px","padding":"18px"}} />
                     <div className="card-body">

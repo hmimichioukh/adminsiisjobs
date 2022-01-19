@@ -6,7 +6,7 @@ import { FiMapPin,FiMail,FiPhone,FiShield,FiLinkedin,FiGlobe,FiMoreVertical } fr
 import Hmimi from "../../assetes/image/hmimi.jpg"
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/api'
+    baseURL:'https://siisbackjob.herokuapp.com/api'
 });
 function ConsCard(props) {
     const {detail}=props
@@ -73,7 +73,7 @@ function ConsCard(props) {
                                 </IconContext.Provider>
                             </button>
                                 <ul className="dropdown-menu">
-                                    <LinkContainer to="/">
+                                    <LinkContainer to={`/consultantcandidates/${detail.userId}`} >
                                 <li className="dropdown-item">Voir</li>
                                 </LinkContainer>
                                 <li><a className="dropdown-item" href="#">Modifer</a></li>
@@ -88,37 +88,3 @@ function ConsCard(props) {
     )
 }
 export default ConsCard
-/*
- <p>
-                              <IconContext.Provider value={{className:"icon-single"}}>
-                                  <FiShield/>
-                              </IconContext.Provider>
-                               Experince : {detail.experince}
-                          </p>
-                          <p>
-                              <IconContext.Provider value={{className:"icon-single"}}>
-                                  <FiBriefcase/>
-                              </IconContext.Provider>
-                              Post : {detail.domain}
-                            </p>
-                            <p>
-                              <IconContext.Provider value={{className:"icon-single"}}>
-                                  <FiLinkedin/>
-                              </IconContext.Provider>
-                              LinkednIn : <a href={`${detail.linkend}`}>{detail.linkend} </a>
-
-                            </p>
-                            <p>
-                              <IconContext.Provider value={{className:"icon-single"}}>
-                                  <FiMail/>
-                              </IconContext.Provider>
-                              Email : <a href={`mailto:${detail.email}`}>{detail.email} </a>
-
-                            </p>
-                            <p>
-                              <IconContext.Provider value={{className:"icon-single"}}>
-                                  <FiPhone/>
-                              </IconContext.Provider>
-                              Telephone : {detail.phone} 
-
-                            </p>*/

@@ -4,7 +4,7 @@ import TestCard from "../component/testmonials/testCard"
 import Loading from '../helpers/loading'
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'http://localhost:4444/admin'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function EditContent() {
     const [testmonials,setTesmonials] = useState([])

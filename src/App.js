@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <Switch>
-         <Route path="/" component={()=>(isAuth()&&userType()==='admin'?<Home/>:<Login />)}/>
+         <Route path="/" component={()=>(isAuth() && userType()==='admin'? <Home/>:<Login />)}/>
       </Switch>
     </Router>
      
