@@ -1,55 +1,37 @@
 import React,{useState,useEffect} from 'react'
 import { Col, Container, Row,Form,Button } from 'react-bootstrap'
-import axios from 'axios'
 import { InputTags } from 'react-bootstrap-tagsinput'
 import 'react-bootstrap-tagsinput/dist/index.css'
 import ErrorMessage from '../helpers/errormessage';
-import { useHistory } from 'react-router';
+import { useHistory,useParams } from 'react-router';
 import Loading from '../helpers/loading';
+import axios from 'axios'
 const api = axios.create({  
     baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 
-/*
-image
-titre
-description
-experince
-domain
-contrat
-
-*/
-function AddJob() {
+function ModifierJob() {
     const history = useHistory()
-
+    const { id } = useParams();
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [taches, setTaches] = useState([])
     const [skillsets, setSkillsets] = useState([]);
-    const [jobImage,setJobImage] = useState("https://res.cloudinary.com/hmimi/image/upload/v1641223565/mission.png");
+    const [jobImage,setJobImage] = useState("");
     const [imagePreview,setImagePreview] =useState("")
     const[experince,setExperince] = useState("");
-    const [jobDetails, setJobDetails] = useState({
-    title:'',
-    description:'',
-    subtitle:'',
-    domain:'',
-    experince:'',
-    contrat:'',
-    address:'',
-    TeleTravailler:false,
-    maxApplicants:100,
-    deadline:new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 2000)
-    .toISOString()
-    .substr(0, 16),
-    maxPositions:1,
-    skillsets: [],
-    taches: [],
-    jobType:'',
-    salary:'',
+    const[title,setTitle] = useState("");
+    const[description,setDescription] = useState("");
+    const[subtitle,setSubtitle] = useState("");
+    const[domain,setDomain] = useState("");
+    const[contrat,setContrat] = useState("");
+    const[address,setAddress] = useState("");
+    const[maxApplicants,setMaxApplicants] = useState("");
+    const[deadline,setDeadline] = useState("");
+    const[maxPositions,setMaxPositions] = useState("");
+    const[jobType,setJobType] = useState("");
+    const[salary,setSalary] = useState("");
 
-})
 const [signupError, setSignupError] = useState({
     errorTitle:false ,
     errorDes:false ,
@@ -63,11 +45,34 @@ const [signupError, setSignupError] = useState({
     errorDeadline:false,
 
   });
-  const handleInput = (e) => {
-    const {name,value} = e.target;
-    setJobDetails({...jobDetails, [name]:value });
+console.log(id)
+useEffect(() => {
+    api.get(`/jobs/${id}`)
+    .then((res=>{
+          console.log(res.data);
+          setTitle(res.data.title)
+          setDescription(res.data.description)
+          setSubtitle(res.data.subtitle)
+          setDomain(res.data.domain)
+          setAddress(res.data.address)
+          setMaxApplicants(res.data.maxApplicants)
+          setDeadline(res.data.deadline)
+          setMaxPositions(res.data.maxPositions)
+          setJobType(res.data.jobType)
+          setSalary(res.data.salary)
+          setSkillsets(res.data.skillsets)
+          setJobImage(res.data.jobImage)
+          setContrat(res.data.contrat)
+
+      })).catch((err)=>{
+          console.log(err);
+      })
     
-};
+}, [])
+
+
+ 
+
 const getImageJob= (e) =>{
     setJobImage(e.target.files[0])
     setImagePreview(URL.createObjectURL(e.target.files[0]))
@@ -99,33 +104,19 @@ const ImagePic=(pics)=>{
 
 const AddJobHandler = (e) =>{
     e.preventDefault();
-    if(!jobDetails.title||!jobDetails.description||!jobDetails.subtitle||!jobDetails.domain||!jobDetails.experince||!jobDetails.contrat||!jobDetails.address||!jobDetails.jobType)
+    if(!title||!description||!subtitle||!domain||!experince||!contrat||!address||!jobType)
     {
         setMessage('please fill the form before submitting')
 
     }
     const formData = new FormData();
-    formData.append('jobImage',jobImage)
-    formData.append('title',jobDetails.title);
-    formData.append('description',jobDetails.description);
-    formData.append('subtitle',jobDetails.subtitle);
-    formData.append('domain',jobDetails.domain);
-    formData.append('experince',jobDetails.experince);
-    formData.append('contrat',jobDetails.contrat);
-    formData.append('address',jobDetails.address);
-    formData.append('maxApplicants',jobDetails.maxApplicants);
-    formData.append('deadline',jobDetails.deadline);
-    formData.append('maxPositions',jobDetails.maxPositions);
-    formData.append('jobType',jobDetails.jobType);
     skillsets.forEach((skill)=>{
         formData.append('skillsets[]',skill);
-
     })
-    formData.append('salary',jobDetails.salary);
   
     setLoading(true)
 
-    const Addjob = api.post('/jobs', formData,{
+    const Addjob = api.put(`/jobs/${id}`, {jobImage,title,description,subtitle,domain,experince,contrat,address,maxApplicants,deadline,maxPositions,jobType},{
         headers: {
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
             },
@@ -136,7 +127,6 @@ const AddJobHandler = (e) =>{
             history.push('/missions');
         }).catch((err)=>{
             console.log(err.response);
-            setLoading(false);
         })
 //console.log(skillsets)
 
@@ -152,7 +142,7 @@ const AddJobHandler = (e) =>{
                   <div className="user-profile-pic">
                      <Row>
                         <Col xl={9}>
-                          {imagePreview ? (<img  src={imagePreview} alt="profile picture" style={{"width":"120px;"}} className="jobImage" />):(<img  src={jobImage} alt="profile picture" className="jobImage" />) }
+                          {imagePreview ? (<img  src={imagePreview} alt="profile picture" />):(<img  src={jobImage} alt="profile picture" />) }
 
                             <input 
                                xid="getImageJob" 
@@ -160,7 +150,7 @@ const AddJobHandler = (e) =>{
                                 name='getImageJob'
                                 className="input-pic" 
                                 onChange={(e)=>ImagePic(e.target.files[0])}
-                                Value={getImageJob}
+                                value={getImageJob}
                                 />
                             </Col>
                             <Col xl={3}>
@@ -173,9 +163,9 @@ const AddJobHandler = (e) =>{
                         <Form.Control 
                         type="text" 
                         placeholder="Enter un titre a votre offre"
-                        value={jobDetails.title}
+                        value={title}
                         className={signupError.errorTitle ? "emptyinpute":""}
-                        onChange={handleInput}
+                        onChange={(e) => setTitle(e.target.value)}
                         name="title" 
                         onBlur={(e)=>{
                         if(e.target.value === ""){
@@ -195,11 +185,11 @@ const AddJobHandler = (e) =>{
                     <Form.Group className="mb-3 input-add-job" controlId="formBasicEmail">
                         <Form.Label>Subtitle D'offre</Form.Label>
                         <Form.Control
-                        type="text"
+                        type="text" 
                         placeholder="Enter un titre a votre offre"
-                        value={setJobDetails.subtitle}
+                        value={subtitle}
                         className={signupError.errorSubtitle ? "emptyinpute":""}
-                        onChange={handleInput}
+                        onChange={(e) => setSubtitle(e.target.value)}
                         name="subtitle" 
                         onBlur={(e)=>{
                         if(e.target.value === ""){
@@ -223,9 +213,9 @@ const AddJobHandler = (e) =>{
 
                             <Form.Select aria-label="Default select example" 
                             className="input-add-job"
-                            value={jobDetails.experince}
+                            value={experince}
                             name="experince"
-                            onChange={handleInput}
+                            onChange={(e) => setExperince(e.target.value)}
                             onBlur={(e)=>{
                                 if(e.target.value === ""){
                                 setSignupError({...signupError, errorExperince:true });
@@ -255,9 +245,9 @@ const AddJobHandler = (e) =>{
                                 <Form.Control 
                                 type="number" 
                                 placeholder="Enter un titre a votre offre"
-                                value={jobDetails.salary}
+                                value={salary}
                                 className={signupError.errorSalary ? "emptyinpute":""}
-                                onChange={handleInput}
+                                onChange={(e) => setSalary(e.target.value)}
                                 name="salary" 
                                 onBlur={(e)=>{
                                 if(e.target.value === ""){
@@ -282,10 +272,10 @@ const AddJobHandler = (e) =>{
                            <Col xl={6}>
                            <Form.Label>Rythm de travailler</Form.Label>
                             <Form.Select aria-label="Default select example" className="input-add-job" 
-                             value={jobDetails.jobType}
+                             value={jobType}
                              name="jobType"
-                             onChange={handleInput}
-                            >
+                             onChange={(e) => setJobType(e.target.value)}
+                             >
                                     <option>Rythm de travailler</option>
                                     <option name="Full Time" value="Full Time">Full time</option>
                                     <option name="Part Time" value="Part Time">Part Time</option>
@@ -295,9 +285,9 @@ const AddJobHandler = (e) =>{
                            <Col xl={6}>
                            <Form.Label>Domain</Form.Label>
                             <Form.Select aria-label="Default select example" className="input-add-job"
-                            value={jobDetails.domain}
+                            value={domain}
                             name="domain"
-                            onChange={handleInput}
+                            onChange={(e) => setDomain(e.target.value)}
                             >
                                     <option>Domain</option>
                                     <option  name="Web Development " value="Web Development">Development Web</option>
@@ -321,9 +311,9 @@ const AddJobHandler = (e) =>{
                         <Form.Control 
                         type="text"
                         placeholder="Enter un titre a votre offre"
-                        value={jobDetails.address}
+                        value={address}
                         className={signupError.errorAddress ? "emptyinpute":""}
-                        onChange={handleInput}
+                        onChange={(e) => setAddress(e.target.value)}
                         name="address" 
                         onBlur={(e)=>{
                         if(e.target.value === ""){
@@ -344,10 +334,10 @@ const AddJobHandler = (e) =>{
                             <div className="d-flex contrats">
                                 
                             <Form.Group className="mb-3 contra-type input-add-job d-flex " controlId="formBasicCheckbox">
-                              <Form.Check  checked={jobDetails.contrat === 'CDD'  } name='contrat' value='CDD'    type="radio" label="CDD" className="radio-profile"  onChange={handleInput} />
-                              <Form.Check  checked={jobDetails.contrat === 'CDI'  } name='contrat' value='CDI'    type="radio" label="CDI" className="radio-profile"  onChange={handleInput} />
-                              <Form.Check  checked={jobDetails.contrat === 'Stage'  } name='contrat' value='Stage'    type="radio" label="Stage" className="radio-profile"  onChange={handleInput} />
-                              <Form.Check  checked={jobDetails.contrat === 'Freelancer'  } name='contrat' value='Freelancer'    type="radio" label="Freelancer" className="radio-profile"  onChange={handleInput} />
+                              <Form.Check  checked={contrat === 'CDD'  } name='contrat' value='CDD'    type="radio" label="CDD" className="radio-profile"  onChange={(e) => setContrat(e.target.value)} />
+                              <Form.Check  checked={contrat === 'CDI'  } name='contrat' value='CDI'    type="radio" label="CDI" className="radio-profile"  onChange={(e) => setContrat(e.target.value)} />
+                              <Form.Check  checked={contrat === 'Stage'  } name='contrat' value='Stage'    type="radio" label="Stage" className="radio-profile"  onChange={(e) => setContrat(e.target.value)} />
+                              <Form.Check  checked={contrat === 'Freelancer'  } name='contrat' value='Freelancer'    type="radio" label="Freelancer" className="radio-profile"  onChange={(e) => setContrat(e.target.value)} />
                             </Form.Group>
                             </div>
                     <div>
@@ -357,9 +347,9 @@ const AddJobHandler = (e) =>{
                         <Form.Label>Application deadline</Form.Label>
                         <Form.Control 
                         type="datetime-local" placeholder="Enter un titre a votre offre" 
-                        value={jobDetails.deadline}
+                        value={deadline}
                         className={signupError.errorDeadline ? "emptyinpute":""}
-                        onChange={handleInput}
+                        onChange={(e) => setDeadline(e.target.value)}
                         name="deadline" 
                         onBlur={(e)=>{
                         if(e.target.value === ""){
@@ -386,9 +376,9 @@ const AddJobHandler = (e) =>{
                            <Form.Group className="mb-3 input-add-job" controlId="formBasicEmail">
                         <Form.Label>max application</Form.Label>
                         <Form.Control type="number" placeholder="Enter un titre a votre offre"
-                          value={jobDetails.maxApplicants}
+                          value={maxApplicants}
                           className={signupError.errorMaxApp ? "emptyinpute":""}
-                          onChange={handleInput}
+                          onChange={(e) => setMaxApplicants(e.target.value)}
                           name="maxApplicants" 
                           min="1"
                           onBlur={(e)=>{
@@ -405,9 +395,9 @@ const AddJobHandler = (e) =>{
                            <Form.Group className="mb-3 input-add-job" controlId="formBasicEmail">
                         <Form.Label>maxPositions</Form.Label>
                         <Form.Control type="number" placeholder="Enter un titre a votre offre"
-                        value={jobDetails.maxPositions}
+                        value={maxPositions}
                         className={signupError.errorMaxPos ? "emptyinpute":""}
-                        onChange={handleInput}
+                        onChange={(e) => setMaxPositions(e.target.value)}
                         name="maxPositions" 
                         min="1"
                         onBlur={(e)=>{
@@ -433,30 +423,12 @@ const AddJobHandler = (e) =>{
                         ))}
                     </ol>
                   </div>
-                  <Form.Group className="mb-3 input-add-job" controlId="formBasicEmail">
-                        <Form.Label>Taches de la mission</Form.Label>
-                        <Form.Control type="text" placeholder="Enter une taches"
-                        value={jobDetails.taches}
-                        className={signupError.errorMaxPos ? "emptyinpute":""}
-                        onChange={handleInput}
-                        name="taches" 
-                        onBlur={(e)=>{
-                        if(e.target.value === ""){
-                        setSignupError({...signupError, errorMaxPos:true });
-                        }else{
-                        setSignupError({...signupError, errorMaxPos:false });        
-                        }
-                        }}
-                        
-                        
-                        />
-                    </Form.Group>
                     <Form.Group className="mb-3 input-add-job" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Description</Form.Label>
                         <Form.Control as="textarea" rows={8}
-                         value={jobDetails.description}
+                         value={description}
                          className={signupError.errorDes ? "emptyinpute":""}
-                         onChange={handleInput}
+                         onChange={(e) => setDescription(e.target.value)}
                          name="description" 
                          onBlur={(e)=>{
                          if(e.target.value === ""){
@@ -483,7 +455,7 @@ const AddJobHandler = (e) =>{
     )
 }
 
-export default AddJob
+export default ModifierJob
 /*
 <div  className="mb-3">
                   <Form.Label>Skills </Form.Label>

@@ -20,6 +20,7 @@ import About from "./About";
 import Offres from "../component/enterprise/offres"
 import Candidates from "../component/enterprise/candidates"
 import MesCandidates from"../component/Consultans/candidates"
+import ModifierJob from './modifjob';
 function Home(){
     return(
     <>
@@ -44,7 +45,8 @@ function Home(){
                                    <Route  path="/content" component={EditContent} />  
                                    <Route  path="/messages" component={Messages} />  
                                    <Route  path="/hero" component={Hero} />  
-                                   <Route  path="/addmission" component={Addmission} />      
+                                   <Route  path="/addmission" component={Addmission} />   
+                                   <Route  path="/modifierjob/:id" component={ModifierJob} />         
                                    <Route  path="/about" component={About} />        
                                    <Route  path="/parteniars" component={Parteniars} />        
 

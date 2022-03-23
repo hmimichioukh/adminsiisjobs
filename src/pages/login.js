@@ -93,14 +93,14 @@ return loggedin ?(
                                    />
                                          {signupError.errorEmail ? (
                                             <Form.Text className="text danger">
-                                                         Le champ Nom ne doit pas etre vide
+                                                         Le champ email ne doit pas etre vide
                                             </Form.Text>
                                             ) :""
                                                          }
                               </Form.Group>
 
                               <Form.Group className="mb-3 input-auth" >
-                                  <Form.Label>Password</Form.Label>
+                                  <Form.Label>Mot de passe</Form.Label>
                                   <Form.Control
                                    type="password"
                                    name="password"
@@ -119,7 +119,7 @@ return loggedin ?(
                                        />
                                              {signupError.errorPassword ? (
                                                 <Form.Text className="text danger">
-                                                             Le champ Nom ne doit pas etre vide
+                                                             Le champ mot de passe ne doit pas etre vide
                                                 </Form.Text>
                                                 ) :""
                                                              }
@@ -128,7 +128,7 @@ return loggedin ?(
                                  <Col xl={12}>
                                           
                                           <Button variant="primary btn-auth" type="submit">
-                                              Connecter to your account
+                                              se Connecter 
                                           </Button>
                                  </Col>
                              </Row>

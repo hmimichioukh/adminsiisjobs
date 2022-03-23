@@ -7,6 +7,7 @@ import {IconContext} from "react-icons"
 import ReactPaginate from 'react-paginate';
 import Loading from '../helpers/loading'
 import Empty from '../helpers/empty'
+import Trmiss from './tr'
 import axios from 'axios'
 const api = axios.create({  
     baseURL:'https://siisbackjob.herokuapp.com/admin'
@@ -67,6 +68,7 @@ const getData=async()=>{
 
     })
 }
+
     return (
         <section className="mesMissions">
            <Container className="top-mission">
@@ -103,38 +105,7 @@ const getData=async()=>{
                                     </thead>
                                     <tbody>
                                         {allmissions.map(mission=>(
-                                            <tr idx={mission._id}>   
-                                                <td><img src={mission.jobImage} style={{"width":"48px"}} /> </td>                                         
-                                                <td>{mission.title} </td>
-                                                <td>{mission.name} </td>
-                                                <td>{mission.contrat} </td>
-                                                <td>{mission.jobType} </td>
-                                                <td>{mission.domain} </td>
-                                                <td>{mission.experince} </td>
-                                                <td>{mission.address} </td>
-                                                <td>{new Date(mission.dateOfPosting).toLocaleDateString()}</td>
-    
-                                                <td>
-                                                <div class="btn-group">
-                                                    <button type="button" className="btn btn-action-table  " data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <IconContext.Provider value={{className:"icon-table"}}>
-                                                        <FiMoreVertical/>
-    
-                                                        </IconContext.Provider>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                    <LinkContainer to="/">
-                                                        <li className="dropdown-item">Voir</li>
-                                                        </LinkContainer>
-                                                        <li><a class="dropdown-item" href="#">Modifer</a></li>
-                                                        <li><a class="dropdown-item"  >Suprimmer</a></li>
-                                                    </ul>
-                                                    </div>
-                                                
-                                                
-                                                </td>
-    
-                                        </tr>
+                                           <Trmiss idx={mission._id} detail={mission}/>
                                         ))}
                                         
                                     </tbody>

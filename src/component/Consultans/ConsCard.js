@@ -6,10 +6,19 @@ import { FiMapPin,FiMail,FiPhone,FiShield,FiLinkedin,FiGlobe,FiMoreVertical } fr
 import Hmimi from "../../assetes/image/hmimi.jpg"
 import axios from 'axios'
 const api = axios.create({  
-    baseURL:'https://siisbackjob.herokuapp.com/api'
+    baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
 function ConsCard(props) {
     const {detail}=props
+    const handleDelete=()=>{
+        console.log(detail._id); 
+        api.delete(`/users/${detail._id}`).then((res)=>{
+            console.log(res.data)
+            window.location.reload(true);
+        }).catch((err)=>{
+            console.log(err.res)
+        })
+    }
     return (
         <Col xl={12}>       
             <div className="card mb-3 Cand-Card" >
@@ -69,16 +78,14 @@ function ConsCard(props) {
                             <button type="button" className="btn btn-action-table  " data-bs-toggle="dropdown" aria-expanded="false">
                                     <IconContext.Provider value={{className:"icon-table"}}>
                                 <FiMoreVertical/>
-
                                 </IconContext.Provider>
                             </button>
                                 <ul className="dropdown-menu">
                                     <LinkContainer to={`/consultantcandidates/${detail.userId}`} >
                                 <li className="dropdown-item">Voir</li>
                                 </LinkContainer>
-                                <li><a className="dropdown-item" href="#">Modifer</a></li>
-                                <li><a className="dropdown-item" href="#">Telecharger CV</a></li>
-                                <li><a className="dropdown-item"  >Suprimmer</a></li>
+                                <li><a className="dropdown-item" href={`${detail.cv}`} target="_blank">Telecharger CV</a></li>
+                                <li><a className="dropdown-item" onClick={handleDelete}  >Suprimmer</a></li>
                                 </ul>
                             </div>                    
                     </div>
