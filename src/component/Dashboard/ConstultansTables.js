@@ -6,7 +6,7 @@ import { FiMoreVertical,FiBriefcase,FiUsers,FiDatabase } from "react-icons/fi";
 import {IconContext} from "react-icons"
 import Loading from '../../helpers/loading'
 import Empty from '../../helpers/empty'
-
+import CnsTd from './CnsTd'
 const api = axios.create({  
     baseURL:'https://siisbackjob.herokuapp.com/admin'
 });
@@ -57,35 +57,7 @@ function ConsultansTable() {
                                 </thead>
                                 <tbody>
                                     {consultans.map(consultant=>(
-                                        <tr idx={consultant._id}>
-                                            <td><img src={consultant.imageUser} style={{"width":"80px"}} />    </td>
-                                            <td>{consultant.name} </td>
-                                            <td>{consultant.email} </td>
-                                            <td>{consultant.phone} </td>
-                                            <td>{consultant.domain} </td>
-                                            <td>{consultant.experince} </td>
-                                            <td>{consultant.address} </td>
-                                            <td>
-                                            <div class="btn-group">
-                                                <button type="button" className="btn btn-action-table  " data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <IconContext.Provider value={{className:"icon-table"}}>
-                                                    <FiMoreVertical/>
-        
-                                                    </IconContext.Provider>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                <LinkContainer to="/">
-                                                    <li className="dropdown-item">Voir</li>
-                                                    </LinkContainer>
-                                                    <li><a class="dropdown-item" href="#">Modifer</a></li>
-                                                    <li><a class="dropdown-item"  >Suprimmer</a></li>
-                                                </ul>
-                                                </div>
-                                            
-                                            
-                                            </td>
-        
-                                    </tr>
+                                        <CnsTd idx={consultant._id} detail={consultant}/>
                                     ))}
                                     
                                 </tbody>

@@ -43,9 +43,6 @@ function NavSide() {
                  <LinkContainer  to="/messages">
                  <Nav.Link ><IconContext.Provider value={{className:"icon-nav"}}><FiGlobe/></IconContext.Provider>Messages</Nav.Link>
                  </LinkContainer>
-                 <LinkContainer  to="/settings">
-                 <Nav.Link ><IconContext.Provider value={{className:"icon-nav"}}><FiSettings/></IconContext.Provider>Parameters</Nav.Link>
-                 </LinkContainer>
 
                 </Nav>
                 

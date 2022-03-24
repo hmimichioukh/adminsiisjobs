@@ -49,7 +49,6 @@ function Home(){
                                    <Route  path="/modifierjob/:id" component={ModifierJob} />         
                                    <Route  path="/about" component={About} />        
                                    <Route  path="/parteniars" component={Parteniars} />        
-
                                 </Switch>
                             </Col> 
                         </Row>

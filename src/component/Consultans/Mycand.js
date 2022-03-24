@@ -9,25 +9,25 @@ const api = axios.create({
 function MyCand(props) {
     const {detail}=props
     const [jobdetails,setJobDetails] =useState([])
-    console.log(detail)
+    //console.log(detail)
     const [applicant,setApplicant] = useState(detail.jobApplicant)
     const[applicationInfo,setApplicationInfo]= useState(detail)
     useEffect(() => {
        api.get(`/jobs/${detail.jobId}`).then((res)=>{
-           console.log(res)
+           //console.log(res)
            setJobDetails(res.data)
        }).catch((err) => {
            console.log(err)
        })
     }, [])
     const colorSet = {
-        applied: "#3454D1",
-        entertien:"#DC851F",
-        accepted: "#09BC8A",
-        rejected: "#D1345B",
-        deleted: "#B49A67",
-        cancelled: "#FF8484",
-        finished: "#4EA5D9",
+        postule: "#3454D1",
+        entretien: "#DC851F",
+        accepté: "#09BC8A",
+        rejeté: "#D1345B",
+        supprimé: "#B49A67",
+        annulé: "#FF8484",
+        achevé: "#4EA5D9",
       };
         const refuse=(status)=>{
            const statusData={
@@ -40,7 +40,7 @@ function MyCand(props) {
                       }, 
                 }).then((res)=>{
 
-                    console.log(res)
+                    //console.log(res)
                     window.location.reload()
                 }).catch((err)=>{
                     console.log(err)

@@ -31,7 +31,7 @@ function MesCandidates(){
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
               },
         }).then((res)=>{
-            console.log(res.data);
+            //console.log(res);
             setCandidateurs(res.data)
         })
     }, [])
